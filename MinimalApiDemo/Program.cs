@@ -5,7 +5,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
-    options.UseInMemoryDatabase("TestDb");
+    //options.UseInMemoryDatabase("TestDb");
+    options.UseSqlServer(builder.Configuration.GetConnectionString("MinimalDbConnection"));
 });
 var app = builder.Build();
 app.MapGet("/", () =>
@@ -93,4 +94,7 @@ app.MapDelete("api/posts", (int id, ApplicationDbContext db) =>
     }
     return Results.BadRequest("post Delete failed.");
 });
+
+
+
 app.Run();
